@@ -51,6 +51,11 @@ use Curses;
 use Getopt::Std;
 use strict;
 use warnings;
+use sigtrap 'handler' => \&do_nothing, qw(normal-signals error-signals old-interface-signals INT TSTP);
+
+sub do_nothing {
+	# lol
+};
 
 my $version = "1.1";
 my $new_fish = 1;
@@ -121,7 +126,7 @@ sub main {
 		while(1) {
 			my $in = lc(getch());
 
-			if   ( $in eq 'q' ) { quit(); }   # Exit
+			if   ( $in eq 'q' ) { do_nothing(); }   # Exit
 			elsif( $in eq 'r' ) { last; }     # Redraw (will recreate all objects)
 			elsif( $in eq 'p' ) { $paused = !$paused; }
 
